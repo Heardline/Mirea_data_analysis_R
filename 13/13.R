@@ -33,18 +33,18 @@ ggplot(dataset,aes(x=origin,y=price)) + geom_boxplot()
 mod <- lm(price~origin, dataset)
 Anova(mod)
 # 7
-ggplot(dataset,aes(x=origin,y=price)) + geom_boxplot()
-mod <- lm(price~origin*food, dataset)
+ggplot(dataset,aes(x=origin,y=price)) + geom_boxplot() + facet_wrap(~food)
+mod <- lm(price~origin+food, dataset)
 Anova(mod)
 # 8 
-model.tables(aov(price~origin*food,dataset),'means')
+model.tables(aov(price~origin+food,dataset),'means')
 # 9
 ggplot(dataset,aes(x=food,y=price,color=store,shape=origin,size=2)) + geom_point() + geom_text(aes(label=price),hjust=0, vjust=-1)
-fit <- aov(price~store*origin,dataset)
+fit <- aov(price~store+origin,dataset)
 summary(fit)
 TukeyHSD(fit)
 # 10-11
-fit <- aov(price~store:origin,dataset)
+fit <- aov(price~store*origin,dataset)
 summary(fit)
 TukeyHSD(fit)
 
@@ -61,11 +61,18 @@ ggplot(dataset,aes(x=therapy,y=well_being)) + geom_boxplot()
 summary(aov(well_being~therapy,dataset))
 # 15
 ggplot(dataset,aes(x=price,y=well_being)) + geom_boxplot() + facet_wrap(~therapy)
-summary(aov(well_being~therapy*price,dataset))
+summary(aov(well_being~therapy+price,dataset))
 # 16
 ggplot(dataset,aes(x=price,y=well_being)) + geom_boxplot() + facet_grid(sex~therapy)
 summary(aov(well_being~therapy*price*sex,dataset))
+# 17
+ggplot(therapy_data, aes(x=price, y=well_being)) + geom_boxplot() + facet_grid(~subject)
+#Вывод: Терапии с высокой ценой вызывало более положительное самочувствие
 # 18
 # Да ладно 😒
 dataset <- read.csv("shops.csv")
 dataset
+mod_ind <- lm(price ~ food,data=dataset)
+mod_ind
+anova(mod_ind)
+mean(dataset$price)
