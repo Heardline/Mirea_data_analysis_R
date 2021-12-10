@@ -59,3 +59,5 @@ means <- kmeans(mydata,3)
 library(cluster)
 clusplot(mydata, means$cluster, main='2D representation of the Cluster solution',
          color=TRUE, shade=TRUE, labels=2, lines=0)
+
+# НЕ ДОДЕЛАНА РАБОТА
